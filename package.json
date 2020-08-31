@@ -11,8 +11,9 @@
   },
   "scripts": {
     "start": "node ./src/cli.js -p ./tests/plugins/babel-plugin-dummy.js -f ./tests/code/hello-world.js",
-    "run-winery-import": "node ./src/cli.js -p ./tests/plugins/babel-plugin-group-imports.js",
-    "start-xtm": "node ./src/cli.js -p ./tests/plugins/babel-plugin-group-imports.js -d ~/Documents/Code/xing/cra/frontend/app/components/atoms"
+    "run-winery-group-imports": "node ./src/cli.js -p ./tests/plugins/babel-plugin-group-imports.js",
+    "xtm": "yarn run-winery-group-imports -d ~/Documents/Code/xing/cra/frontend/app/components/atoms",
+    "xts": "yarn run-winery-group-imports -d ~/Documents/Code/xing/erecruiting-sourcing-service-frontend/src"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.10.1",
@@ -26,6 +27,7 @@
     "@babel/core": "^7.9.6",
     "@babel/plugin-syntax-jsx": "^7.8.3",
     "@babel/template": "^7.10.3",
+    "babylon": "^7.0.0-beta.47",
     "glob": "^7.1.6",
     "recast": "^0.19.1"
   }

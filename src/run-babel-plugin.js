@@ -1,36 +1,40 @@
-const traverse = require("@babel/traverse").default
-const t = require("@babel/types")
-const template = require("@babel/template").default
-const { parse, print } = require("recast")
-var fs = require("fs")
+const traverse = require('@babel/traverse').default;
+const t = require('@babel/types');
+const template = require('@babel/template').default;
+const { parse, print } = require('recast');
+var fs = require('fs');
 
 function runBabelPlugin({ filePath, babelPlugin, options = {} }) {
   try {
-    const source = fs.readFileSync(filePath, { encoding: "utf8" })
-    // console.log(`Code source loaded (${source.length} characters)`)
-    // console.log('Source:', source)
+    const source = fs.readFileSync(filePath, { encoding: 'utf8' });
     const ast = parse(source, {
-      parser: require("recast/parsers/babel"),
-    })
-    traverse(ast, babelPlugin({ types: t, template }, options).visitor)
-    const { code: output } = print(ast)
-    // console.log('\n\n-------------\n')
-    // console.log('[Output]\n\n')
-    if (output === source) {
-      console.log("   -> No changes for this file")
-    } else {
-      console.log("   -> Changes applied")
-    }
+      parser: {
+        parse(source, options) {
+          // Notes: the provided Typescript parser doesn't handle JSX (just flow),
+          // so we need to add this code to get both
+          const babelOptions = require('recast/parsers/_babel_options').default(
+            options
+          );
+          babelOptions.plugins.push('jsx', 'typescript');
+          return require('@babel/parser').parse(source, babelOptions);
+        },
+      },
+    });
+    traverse(ast, babelPlugin({ types: t, template }, options).visitor);
+    const { code: output } = print(ast);
     if (options.isDryRun !== true) {
-      fs.writeFileSync(filePath, output, { encoding: "utf8" })
+      fs.writeFileSync(filePath, output, { encoding: 'utf8' });
     }
-    // console.log('Plugin applied successfully')
-    // console.log(`Output source: ${output.length} characters`)
 
-    // console.log(output)
+    if (output !== source) {
+      return { hasChanged: true };
+    }
   } catch (e) {
-    console.log(e)
+    console.error('Error in ' + filePath);
+    console.error(e);
+    return { hasError: true };
   }
+  return {};
 }
 
-module.exports = runBabelPlugin
+module.exports = runBabelPlugin;
