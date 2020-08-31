@@ -1,0 +1,32 @@
+{
+  "name": "run-babel-codemod",
+  "version": "0.8.0",
+  "description": "Utility tool to run babel plugins as codemods",
+  "main": "index.js",
+  "repository": "git@github.com:matthizou/run-babel-codemod.git",
+  "author": "matthizou@gmail.com",
+  "license": "MIT",
+  "bin": {
+    "run-babel-codemod": "./src/cli.js"
+  },
+  "scripts": {
+    "start": "node ./src/cli.js -p ./tests/plugins/babel-plugin-dummy.js -f ./tests/code/hello-world.js",
+    "run-winery-import": "node ./src/cli.js -p ./tests/plugins/babel-plugin-group-imports.js",
+    "start-xtm": "node ./src/cli.js -p ./tests/plugins/babel-plugin-group-imports.js -d ~/Documents/Code/xing/cra/frontend/app/components/atoms"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.10.1",
+    "eslint": "^7.1.0",
+    "jest": "^26.0.1",
+    "npm": "^6.14.5",
+    "prettier": "^2.0.5"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-syntax-jsx": "^7.8.3",
+    "@babel/template": "^7.10.3",
+    "glob": "^7.1.6",
+    "recast": "^0.19.1"
+  }
+}
