@@ -10,10 +10,8 @@
     "run-babel-codemod": "./src/cli.js"
   },
   "scripts": {
-    "start": "node ./src/cli.js -p ./tests/plugins/babel-plugin-dummy.js -f ./tests/code/hello-world.js",
-    "run-winery-group-imports": "node ./src/cli.js -p ./tests/plugins/babel-plugin-group-imports.js",
-    "xtm": "yarn run-winery-group-imports -d ~/Documents/Code/xing/cra/frontend/app/components/atoms",
-    "xts": "yarn run-winery-group-imports -d ~/Documents/Code/xing/erecruiting-sourcing-service-frontend/src"
+    "start": "node ./src/cli.js",
+    "test": "node ./src/cli.js -p ./tests/plugins/babel-plugin-dummy.js -f ./tests/code/hello-world.js"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.10.1",
